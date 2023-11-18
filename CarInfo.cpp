@@ -10,13 +10,25 @@ void CarInfo::printCarInfo(std::ostream& out) const {
     date.print(out);
     out << ", Car number: " << carNumber << std::endl;
 }
-
 CarInfo CarInfo::readCarInfoFromFile(std::istream& inputFile) {
     CarInfo car;
+
     car.date = Date::create_from_stream(inputFile);
     inputFile >> car.carNumber;
+
+    if (!car.isValid()) {
+        throw std::runtime_error("Неверные данные CarInfo в файле.");
+    }
+
     return car;
 }
+
+//CarInfo CarInfo::readCarInfoFromFile(std::istream& inputFile) {
+//    CarInfo car;
+//    car.date = Date::create_from_stream(inputFile);
+//    inputFile >> car.carNumber;
+//    return car;
+//}
 bool CarInfo::isValidCarNumber(const std::string& number) {
     if (number.length() != 6) {
         return false;
