@@ -18,7 +18,14 @@ int main() {
         exit(1);
     }
 
-    readCarInfo(inputFile, carList);
+    try {
+        readCarInfo(inputFile, carList);
+    }
+    catch (const std::exception& e) {
+        std::cerr << "Ошибка при чтении CarInfo из файла: " << e.what() << std::endl;
+        // Перехват исключения или обработка по необходимости
+    }
+
     displayCarInfo(carList, std::cout);
     return 0;
 }

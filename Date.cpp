@@ -27,42 +27,55 @@ Date Date::create_from_stream(std::istream& stream) {
     Date result;
     char separator;
 
-    if (!(stream >> result.day)) {
-        std::cerr << "Ошибка: Не удалось считать день." << std::endl;
-        return Date(); // Возвращаем дефолтное значение Date (0.0.0)
+    if (!(stream >> result.day) || !(stream >> separator) || separator != '.' ||
+        !(stream >> result.month) || !(stream >> separator) || separator != '.' ||
+        !(stream >> result.year) || !isDateValid(result)) {
+        throw std::runtime_error("Неверный формат даты или значение.");
     }
 
-    if (!(stream >> separator) || separator != '.') {
-        std::cerr << "Ошибка: Разделитель даты должен быть точкой." << std::endl;
-        // Пропустим некорректный разделитель и продолжим считывать дату
-        stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        return create_from_stream(stream); // Рекурсивный вызов для считывания даты
-    }
-
-    if (!(stream >> result.month)) {
-        std::cerr << "Ошибка: Не удалось считать месяц." << std::endl;
-        return Date(); // Возвращаем дефолтное значение Date (0.0.0)
-    }
-
-    if (!(stream >> separator) || separator != '.') {
-        std::cerr << "Ошибка: Разделитель даты должен быть точкой." << std::endl;
-        stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        return create_from_stream(stream);
-    }
-
-    if (!(stream >> result.year)) {
-        std::cerr << "Ошибка: Не удалось считать год." << std::endl;
-        return Date(); // Возвращаем дефолтное значение Date (0.0.0)
-    }
-
-    if (!isDateValid(result)) {
-        std::cerr << "Ошибка: Недопустимая дата." << std::endl;
-        return Date(); // Возвращаем дефолтное значение Date (0.0.0)
-    }
-
-    // Если программа дошла до этой точки, значит, дата верна
     return result;
 }
+
+//Date Date::create_from_stream2(std::istream& stream) {
+//    Date result;
+//    char separator;
+//
+//    if (!(stream >> result.day)) {
+//        throstd::runtime_error("Ошибка: Не удалось считать день.");
+//        return Date(); // Возвращаем дефолтное значение Date (0.0.0)
+//    }
+//
+//    if (!(stream >> separator) || separator != '.') {
+//        std::cerr << "Ошибка: Разделитель даты должен быть точкой." << std::endl;
+//        // Пропустим некорректный разделитель и продолжим считывать дату
+//        stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+//        return create_from_stream(stream); // Рекурсивный вызов для считывания даты
+//    }
+//
+//    if (!(stream >> result.month)) {
+//        std::cerr << "Ошибка: Не удалось считать месяц." << std::endl;
+//        return Date(); // Возвращаем дефолтное значение Date (0.0.0)
+//    }
+//
+//    if (!(stream >> separator) || separator != '.') {
+//        std::cerr << "Ошибка: Разделитель даты должен быть точкой." << std::endl;
+//        stream.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+//        return create_from_stream(stream);
+//    }
+//
+//    if (!(stream >> result.year)) {
+//        std::cerr << "Ошибка: Не удалось считать год." << std::endl;
+//        return Date(); // Возвращаем дефолтное значение Date (0.0.0)
+//    }
+//
+//    if (!isDateValid(result)) {
+//        std::cerr << "Ошибка: Недопустимая дата." << std::endl;
+//        return Date(); // Возвращаем дефолтное значение Date (0.0.0)
+//    }
+//
+//    // Если программа дошла до этой точки, значит, дата верна
+//    return result;
+//}
 
 bool Date::isDateValid(const Date& date) {
     if (date.month < 1 || date.month > 12)

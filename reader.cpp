@@ -4,6 +4,7 @@
 
 // stringstream
 
+
 void readCarInfo(std::istream& inputFile,  std::vector<CarInfo>& carList) {
     while (!inputFile.eof()) {
         CarInfo car = CarInfo::readCarInfoFromFile(inputFile);
