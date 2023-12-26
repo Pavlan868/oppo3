@@ -1,6 +1,7 @@
 #pragma once
 #include "Date.h"
 
+#include "main.h"
 #include <fstream>
 #include <string>
 

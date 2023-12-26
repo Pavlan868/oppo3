@@ -2,6 +2,7 @@
 #ifndef DATA_H
 #define DATA_H
 
+#include "main.h"
 #include <vector>
 #include <fstream>
 #include "CarInfo.h"

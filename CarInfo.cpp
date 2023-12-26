@@ -1,3 +1,4 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
 #include "pch.h"
 #include "CarInfo.h"
 #include "Date.h"
